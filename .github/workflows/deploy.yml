@@ -1,4 +1,5 @@
 name: Deploy to öka.online
+
 on:
   push:
     branches: [ "main" ]
@@ -6,9 +7,15 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Install dependencies
         run: npm ci
@@ -25,8 +32,7 @@ jobs:
 
       - name: Deploy via rsync
         run: |
-          rsync -avz --delete \
-            dist/ /var/www/oka-online/ \
-            -e "ssh oka" \
-            --exclude ".git" \
-            --exclude ".github"
+          rsync -avz --delete --mkpath \
+            dist/ oka:/var/www/oka-online/ \
+            -e "ssh"
+ 
