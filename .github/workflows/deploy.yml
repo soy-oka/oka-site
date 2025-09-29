@@ -30,9 +30,14 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           printf "Host oka\n  HostName 103.177.248.133\n  User simon\n  IdentityFile ~/.ssh/id_ed25519\n  StrictHostKeyChecking no\n" > ~/.ssh/config
 
+      - name: Debug SSH (optional)
+        run: ssh -vvv oka true
+
       - name: Deploy via rsync
         run: |
           rsync -avz --delete --mkpath \
+            --omit-dir-times --no-perms --no-owner --no-group \
+            --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r \
             dist/ oka:/var/www/oka-online/ \
-            -e "ssh"
- 
+            -e "ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=6"
+
