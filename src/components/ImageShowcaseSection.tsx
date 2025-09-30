@@ -13,6 +13,11 @@ const ImageShowcaseSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const sendWaitlistRequest = async (payload: typeof formData) => {
+    // TODO: Integrate with backend/service that emails form submissions to hej@okamail.se
+    await new Promise((resolve) => setTimeout(resolve, 800));
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -21,7 +26,7 @@ const ImageShowcaseSection = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.email) {
       toast({
@@ -33,10 +38,11 @@ const ImageShowcaseSection = () => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      await sendWaitlistRequest(formData);
       toast({
         title: "Tack för att du anmälde dig!",
-        description: "Du kommer snart att höra från oss om hur Öka kan stötta er AI-resa."
+        description: "Vi hör av oss med nästa steg för AI-implementering."
       });
       setFormData({
         email: "",
@@ -45,18 +51,21 @@ const ImageShowcaseSection = () => {
         aiExperience: "",
         interest: ""
       });
+    } catch (error) {
+      toast({
+        title: "Något gick fel",
+        description: "Försök igen eller mejla oss direkt på hej@okamail.se.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
     <section className="w-full py-16 bg-white" id="waitlist">
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
         <div className="max-w-4xl mx-auto text-center mb-12 animate-on-scroll">
-          <div className="oka-chip mx-auto mb-4">
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white mr-2">04</span>
-            <span>Väntelista</span>
-          </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-gray-900 mb-4">
             Upplev framtidens teknik
           </h2>
