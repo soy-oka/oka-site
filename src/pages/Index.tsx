@@ -4,9 +4,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import HumanoidSection from "@/components/HumanoidSection";
 import SpecsSection from "@/components/SpecsSection";
-import DetailsSection from "@/components/DetailsSection";
 import ImageShowcaseSection from "@/components/ImageShowcaseSection";
-import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -62,9 +60,7 @@ const Index = () => {
         <Hero />
         <HumanoidSection />
         <SpecsSection />
-        <DetailsSection />
         <ImageShowcaseSection />
-        <Testimonials />
       </main>
       <Footer />
     </div>

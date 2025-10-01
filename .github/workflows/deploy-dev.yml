@@ -1,0 +1,38 @@
+name: Deploy to dev.öka.online
+on:
+  push:
+    branches: [ "dev" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.OKA_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf "Host oka\n  HostName 103.177.248.133\n  User simon\n  IdentityFile ~/.ssh/id_ed25519\n  StrictHostKeyChecking no\n" > ~/.ssh/config
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete --mkpath \
+            --omit-dir-times --no-perms --no-owner --no-group \
+            --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r \
+            dist/ oka:/var/www/oka-dev/ \
+            -e "ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=6"
