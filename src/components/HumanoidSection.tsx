@@ -86,6 +86,7 @@ const HumanoidSection = () => {
   return (
     <div 
       ref={sectionRef} 
+      id="services"
       className="relative" 
       style={{ height: '300vh' }}
     >

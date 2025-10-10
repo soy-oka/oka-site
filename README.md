@@ -133,12 +133,12 @@ function doPost(e) {
   var body = JSON.parse(e.postData.contents);
   sheet.appendRow([
     body.timestamp || new Date().toISOString(),
-    body.name || '',
-    body.email || '',
-    body.company || '',
-    body.notes || '',
-    body.companySize || '',
-    body.aiKnowledge || ''
+   body.name || '',
+   body.email || '',
+   body.company || '',
+   body.notes || '',
+   body.companySize || '',
+   body.aiKnowledge || ''
   ]);
 
   return ContentService.createTextOutput(

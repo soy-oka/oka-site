@@ -76,7 +76,7 @@ const Navbar = () => {
           >
             Hem
           </a>
-          <a href="#why-humanoid" className="nav-link">Tjänster</a>
+          <a href="#services" className="nav-link">Tjänster</a>
           <a href="#specifications" className="nav-link">Vision</a>
           <a href="#waitlist" className="nav-link">Väntelista</a>
           <a href="#contact" className="nav-link">Kontakt</a>
@@ -111,7 +111,7 @@ const Navbar = () => {
             Hem
           </a>
           <a 
-            href="#why-humanoid" 
+            href="#services" 
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
