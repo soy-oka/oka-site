@@ -1,7 +1,8 @@
 
-import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,9 +17,10 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const location = useLocation();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    // Prevent background scrolling when menu is open
     document.body.style.overflow = !isMenuOpen ? 'hidden' : '';
   };
 
@@ -45,11 +47,10 @@ const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a 
-          href="#" 
+        <Link 
+          to="/" 
           className="flex items-center space-x-2 group"
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             scrollToTop();
           }}
           aria-label="Öka"
@@ -62,24 +63,35 @@ const Navbar = () => {
           <span className="font-playfair text-2xl sm:text-3xl tracking-tight text-gray-900 lowercase">
             öka
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
-          <a 
-            href="#" 
-            className="nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToTop();
-            }}
-          >
-            Hem
-          </a>
-          <a href="#services" className="nav-link">Tjänster</a>
-          <a href="#specifications" className="nav-link">Vision</a>
-          <a href="#waitlist" className="nav-link">Väntelista</a>
-          <a href="#contact" className="nav-link">Kontakt</a>
+          <Link to="/" className={cn("nav-link", location.pathname === "/" && "font-semibold")}>Hem</Link>
+          {location.pathname === "/" ? (
+            <>
+              <a href="#services" className="nav-link">Tjänster</a>
+              <a href="#specifications" className="nav-link">Vision</a>
+              <a href="#waitlist" className="nav-link">Väntelista</a>
+              <a href="#contact" className="nav-link">Kontakt</a>
+            </>
+          ) : (
+            <>
+              <Link to="/" className="nav-link">
+                Tjänster
+              </Link>
+              <Link to="/" className="nav-link">
+                Vision
+              </Link>
+              <Link to="/" className="nav-link">
+                Väntelista
+              </Link>
+              <Link to="/" className="nav-link">
+                Kontakt
+              </Link>
+            </>
+          )}
+          <Link to="/om-oss" className={cn("nav-link", location.pathname === "/om-oss" && "font-semibold")}>Om oss</Link>
         </nav>
 
         {/* Mobile menu button - increased touch target */}
@@ -98,58 +110,114 @@ const Navbar = () => {
         isMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"
       )}>
         <nav className="flex flex-col space-y-8 items-center mt-8">
-          <a 
-            href="#" 
+          <Link 
+            to="/" 
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               scrollToTop();
               setIsMenuOpen(false);
               document.body.style.overflow = '';
             }}
           >
             Hem
-          </a>
-          <a 
-            href="#services" 
+          </Link>
+          {location.pathname === "/" ? (
+            <>
+              <a 
+                href="#services" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Tjänster
+              </a>
+              <a 
+                href="#specifications" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Vision
+              </a>
+              <a 
+                href="#waitlist" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Väntelista
+              </a>
+              <a 
+                href="#contact" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Kontakt
+              </a>
+            </>
+          ) : (
+            <>
+              <Link 
+                to="/" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Tjänster
+              </Link>
+              <Link 
+                to="/" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Vision
+              </Link>
+              <Link 
+                to="/" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Väntelista
+              </Link>
+              <Link 
+                to="/" 
+                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.body.style.overflow = '';
+                }}
+              >
+                Kontakt
+              </Link>
+            </>
+          )}
+          <Link 
+            to="/om-oss" 
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
               document.body.style.overflow = '';
             }}
           >
-            Tjänster
-          </a>
-          <a 
-            href="#specifications" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              document.body.style.overflow = '';
-            }}
-          >
-            Vision
-          </a>
-          <a 
-            href="#waitlist" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              document.body.style.overflow = '';
-            }}
-          >
-            Väntelista
-          </a>
-          <a 
-            href="#contact" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              document.body.style.overflow = '';
-            }}
-          >
-            Kontakt
-          </a>
+            Om oss
+          </Link>
         </nav>
       </div>
     </header>
