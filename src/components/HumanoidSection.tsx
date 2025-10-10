@@ -86,24 +86,19 @@ const HumanoidSection = () => {
   return (
     <div 
       ref={sectionRef} 
+      id="services"
       className="relative" 
       style={{ height: '300vh' }}
     >
       <section className="w-full h-screen py-10 md:py-16 sticky top-0 overflow-hidden bg-white" id="why-humanoid">
         <div className="container px-6 lg:px-8 mx-auto h-full flex flex-col">
-          <div className="mb-2 md:mb-3">
-            <div className="flex items-center gap-4 mb-2 md:mb-2 pt-8 sm:pt-6 md:pt-4">
-              <div className="pulse-chip opacity-0 animate-fade-in" style={{
-                animationDelay: "0.1s"
-              }}>
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
-                <span>Tjänster</span>
-              </div>
-            </div>
-            
+          <div className="mb-2 md:mb-8 pt-6 sm:pt-8">
             <h2 className="section-title text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-1 md:mb-2">
-              Varför Ökas AI-tjänster
+              Ökas AI-tjänster
             </h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl">
+              Från första AI-introduktion till fullständig implementering. Vi möter era utmaningar med smarta lösningar i fokus.
+            </p>
           </div>
           
           <div ref={cardsContainerRef} className="relative flex-1 perspective-1000">
@@ -124,17 +119,14 @@ const HumanoidSection = () => {
                 }}
               ></div>
               
-              <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">Visionen</span>
-                </div>
-              </div>
-              
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    AI-workshops som lyfter kompetensen i hela organisationen.
+              <div className="relative z-10 p-6 sm:p-8 md:p-10 h-full flex items-center justify-center text-center">
+                <div className="max-w-2xl space-y-4">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight">
+                    AI Talks
                   </h3>
+                  <p className="text-xl sm:text-2xl text-white/90 leading-relaxed">
+                    Interaktiva workshops som höjer hela teamets AI-kompetens. Vi kartlägger nuläget, ringar in utvecklingsområden och ger er färdiga strategier att använda direkt.
+                  </p>
                 </div>
               </div>
             </div>
@@ -157,17 +149,14 @@ const HumanoidSection = () => {
                 }}
               ></div>
               
-              <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">Visionen</span>
-                </div>
-              </div>
-              
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    Skräddarsydda automationer och AI-agenter som avlastar processer och höjer kundupplevelsen.
+              <div className="relative z-10 p-6 sm:p-8 md:p-10 h-full flex items-center justify-center text-center">
+                <div className="max-w-2xl space-y-4">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight">
+                    Automationer och AI-agenter
                   </h3>
+                  <p className="text-xl sm:text-2xl text-white/90 leading-relaxed">
+                    Vi designar skräddarsydda automationer och AI-agenter som sköter repetitiva uppgifter, förbättrar kundupplevelsen och frigör tid för er att utvecklas.
+                  </p>
                 </div>
               </div>
             </div>
@@ -190,17 +179,14 @@ const HumanoidSection = () => {
                 }}
               ></div>
               
-              <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">Visionen</span>
-                </div>
-              </div>
-              
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    Kontinuerlig kvalitetssäkring, svensk support och SME-fokus för en hållbar AI-resa.
+              <div className="relative z-10 p-6 sm:p-8 md:p-10 h-full flex items-center justify-center text-center">
+                <div className="max-w-2xl space-y-4">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight">
+                    Optimering & Support
                   </h3>
+                  <p className="text-xl sm:text-2xl text-white/90 leading-relaxed">
+                    Stora förändringar, nya rutiner och strategi – eller småskalig problemlösning och individanpassad optimering. Målet är att hitta AI-lösningar som inte bara fungerar utan också utvecklas och förbättras över tid.
+                  </p>
                 </div>
               </div>
             </div>

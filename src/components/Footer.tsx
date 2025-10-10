@@ -22,7 +22,7 @@ const Footer = () => {
           </div>
         </div>
         <p className="text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} Öka. Skapad med stolthet i Sverige.
+          © 2025 Öka, Stockholm.
         </p>
       </div>
     </footer>

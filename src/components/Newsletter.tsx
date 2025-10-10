@@ -62,7 +62,7 @@ const Newsletter = () => {
             Gå med i väntelistan
           </h2>
           <p className="text-xl text-gray-700 mb-10 text-left">
-            Var först att höra om våra AI-workshops, automationer och implementeringstjänster för svenska SME:er
+            Var först att höra om våra AI-workshops, automationer och implementeringstjänster för svenska företag
           </p>
           
           <form onSubmit={handleSubmit} className="space-y-6">
