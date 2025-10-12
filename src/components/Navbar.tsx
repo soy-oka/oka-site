@@ -24,26 +24,27 @@ const Navbar = () => {
     document.body.style.overflow = !isMenuOpen ? 'hidden' : '';
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    document.body.style.overflow = '';
+  };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth"
     });
-    
-    // Close mobile menu if open
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-      document.body.style.overflow = '';
-    }
   };
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 py-2 sm:py-3 md:py-4 transition-all duration-300",
-        isScrolled 
-          ? "bg-white/80 backdrop-blur-md shadow-sm" 
-          : "bg-transparent"
+        isMenuOpen
+          ? "bg-white shadow-sm"
+          : isScrolled
+            ? "bg-white/80 backdrop-blur-md shadow-sm"
+            : "bg-transparent"
       )}
     >
       <div className="container flex items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -52,13 +53,14 @@ const Navbar = () => {
           className="flex items-center space-x-2 group"
           onClick={() => {
             scrollToTop();
+            closeMenu();
           }}
           aria-label="Öka"
         >
-          <img 
-            src="/oka-logo.png" 
-            alt="Öka Logo" 
-            className="h-7 sm:h-8" 
+          <img
+            src="/oka-logo.png"
+            alt="Öka Logo"
+            className="h-7 sm:h-8"
           />
           <span className="font-playfair text-2xl sm:text-3xl tracking-tight text-gray-900 lowercase">
             öka
@@ -91,12 +93,21 @@ const Navbar = () => {
               </Link>
             </>
           )}
-          <Link to="/om-oss" className={cn("nav-link", location.pathname === "/om-oss" && "font-semibold")}>Om oss</Link>
+          <Link
+            to="/om-oss"
+            className={cn("nav-link", location.pathname === "/om-oss" && "font-semibold")}
+            onClick={() => {
+              scrollToTop();
+              closeMenu();
+            }}
+          >
+            Om oss
+          </Link>
         </nav>
 
         {/* Mobile menu button - increased touch target */}
         <button 
-          className="md:hidden text-gray-700 p-3 focus:outline-none" 
+          className="md:hidden p-3 text-gray-700 focus:outline-none"
           onClick={toggleMenu}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -104,121 +115,140 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation - improved for better touch experience */}
-      <div className={cn(
-        "fixed inset-0 z-40 bg-white flex flex-col pt-16 px-6 md:hidden transition-all duration-300 ease-in-out",
-        isMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"
-      )}>
-        <nav className="flex flex-col space-y-8 items-center mt-8">
-          <Link 
-            to="/" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              scrollToTop();
-              setIsMenuOpen(false);
-              document.body.style.overflow = '';
-            }}
+      {/* Mobile Navigation */}
+      <div
+        className={cn(
+          "fixed inset-0 z-50 md:hidden transition-opacity duration-200 ease-in-out",
+          isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        )}
+        role="dialog"
+        aria-modal={isMenuOpen}
+        onClick={closeMenu}
+      >
+        <div className="absolute inset-0 bg-white"></div>
+        <div className="relative flex h-full flex-col">
+          <div
+            className="flex h-full flex-col"
+            onClick={(event) => event.stopPropagation()}
           >
-            Hem
-          </Link>
-          {location.pathname === "/" ? (
-            <>
-              <a 
-                href="#services" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+            <div className="flex items-center justify-between px-6 pt-6">
+              <span className="text-sm font-semibold uppercase tracking-[0.35em] text-gray-400">
+                Öka
+              </span>
+              <button
+                className="p-3 text-gray-900 focus:outline-none"
+                onClick={closeMenu}
+                aria-label="Stäng meny"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <nav className="mt-12 flex flex-1 flex-col items-center gap-5 px-6 text-center text-gray-900">
+              <Link
+                to="/"
+                className="text-2xl font-semibold"
                 onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
+                  scrollToTop();
+                  closeMenu();
                 }}
               >
-                Tjänster
-              </a>
-              <a 
-                href="#specifications" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
-                }}
-              >
-                Vision
-              </a>
-              <a 
-                href="#waitlist" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
-                }}
-              >
-                Väntelista
-              </a>
-              <a 
-                href="#contact" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
-                }}
-              >
-                Kontakt
-              </a>
-            </>
-          ) : (
-            <>
-              <Link 
-                to="/" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
-                }}
-              >
-                Tjänster
+                Hem
               </Link>
-              <Link 
-                to="/" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+
+              {location.pathname === "/" ? (
+                <>
+                  <a
+                    href="#services"
+                    className="text-lg font-medium"
+                    onClick={closeMenu}
+                  >
+                    Tjänster
+                  </a>
+                  <a
+                    href="#specifications"
+                    className="text-lg font-medium"
+                    onClick={closeMenu}
+                  >
+                    Vision
+                  </a>
+                  <a
+                    href="#waitlist"
+                    className="text-lg font-medium"
+                    onClick={closeMenu}
+                  >
+                    Väntelista
+                  </a>
+                  <a
+                    href="#contact"
+                    className="text-lg font-medium"
+                    onClick={closeMenu}
+                  >
+                    Kontakt
+                  </a>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/"
+                    className="text-lg font-medium"
+                    onClick={() => {
+                      scrollToTop();
+                      closeMenu();
+                    }}
+                  >
+                    Tjänster
+                  </Link>
+                  <Link
+                    to="/"
+                    className="text-lg font-medium"
+                    onClick={() => {
+                      scrollToTop();
+                      closeMenu();
+                    }}
+                  >
+                    Vision
+                  </Link>
+                  <Link
+                    to="/"
+                    className="text-lg font-medium"
+                    onClick={() => {
+                      scrollToTop();
+                      closeMenu();
+                    }}
+                  >
+                    Väntelista
+                  </Link>
+                  <Link
+                    to="/"
+                    className="text-lg font-medium"
+                    onClick={() => {
+                      scrollToTop();
+                      closeMenu();
+                    }}
+                  >
+                    Kontakt
+                  </Link>
+                </>
+              )}
+
+              <Link
+                to="/om-oss"
+                className="text-lg font-medium"
                 onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
+                  scrollToTop();
+                  closeMenu();
                 }}
               >
-                Vision
+                Om oss
               </Link>
-              <Link 
-                to="/" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
-                }}
-              >
-                Väntelista
-              </Link>
-              <Link 
-                to="/" 
-                className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  document.body.style.overflow = '';
-                }}
-              >
-                Kontakt
-              </Link>
-            </>
-          )}
-          <Link 
-            to="/om-oss" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              document.body.style.overflow = '';
-            }}
-          >
-            Om oss
-          </Link>
-        </nav>
+            </nav>
+
+            <div className="px-6 pb-10 text-center text-xs uppercase tracking-[0.35em] text-gray-400">
+              © Öka
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );

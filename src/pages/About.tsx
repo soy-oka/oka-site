@@ -93,10 +93,10 @@ const About = () => {
                 <div className="space-y-4 rounded-3xl bg-white/80 backdrop-blur-sm border border-white/60 px-6 sm:px-8 py-6 sm:py-7 shadow-[0_18px_45px_rgba(76,106,219,0.12)]">
                   <h2 className="text-lg sm:text-xl font-semibold text-indigo-900">Om mig</h2>
                   <p className="text-sm sm:text-base text-indigo-900/85 leading-relaxed">
-                    Jag heter Simon och grundade Öka för att sänka tröskeln till AI. Jag har en bakgrund som projektledare inom civilsamhället och har sett hur rätt verktyg kan skapa nya möjligheter som tidigare varit långt utom räckhåll. Som projektledare har jag föreläst om komplexa idéer, i Sverige och internationellt, med en övertygelse om att samarbete är en grundpelare för framsteg. Jag drivs av att göra komplexa idéer begripliga och att se andra människor växa.
+                    Jag heter Simon och grundade Öka för att ge svenska företag tillgång till AI. Jag har en bakgrund som projektledare inom civilsamhället och har sett hur rätt verktyg kan skapa helt nya möjligheter. Som projektledare har jag utvecklat och presenterat egna arbetsmetoder, både i Sverige och internationellt. Jag drivs av att hjälpa människor att växa och förmedla verktyg för utveckling.
                   </p>
                   <p className="text-sm sm:text-base text-indigo-900/85 leading-relaxed">
-                    Jag tror på ett nära och effektivt samarbete, där vi bygger lösningar och utvärderar tillsammans. Min största uppgift är att ni har all nödvändig kunskap under hela vägen.
+                    Jag tror på ett nära samarbete, där vi bygger lösningar och utvärderar tillsammans. Jag ser till att ni får användbara verktyg som skapar värde, sparar tid och ökar kvaliteten.
                   </p>
                 </div>
               </div>
