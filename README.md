@@ -91,6 +91,8 @@ VITE_EMAILJS_TEMPLATE_ID=din_template_id
 
    `VITE_WAITLIST_LOGO_URL` är valfri men rekommenderad – den pekar på en offentlig logotyp-URL som används i e-postutskicken.
 
+   Om du bygger sajten på en server via GitHub är det bra att lägga samma värden i `.env.production` (ligger i repo) så att EmailJS-nycklarna finns tillgängliga i byggsteget.
+
 ### (Valfritt) spara till kalkylark
 
 Om du vill spara anmälningarna i ett spreadsheet kan du skapa ett webhook-endpoint (t.ex. via Google Apps Script eller Make/Zapier) och ange URL:en i `VITE_WAITLIST_SPREADSHEET_WEBHOOK`. Då skickas varje anmälan både via e-post och till ditt valda endpoint. Exempel:
