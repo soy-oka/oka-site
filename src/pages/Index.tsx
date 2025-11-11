@@ -1,13 +1,32 @@
 
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import HumanoidSection from "@/components/HumanoidSection";
 import SpecsSection from "@/components/SpecsSection";
 import ImageShowcaseSection from "@/components/ImageShowcaseSection";
 import Footer from "@/components/Footer";
+import { useLocation } from "react-router-dom";
 
 const Index = () => {
+  const location = useLocation();
+
+  const scrollToSection = useCallback((sectionId: string) => {
+    if (typeof window === "undefined") return;
+
+    const targetElement = document.getElementById(sectionId);
+    if (!targetElement) return;
+
+    const offset = window.innerWidth < 768 ? 100 : 80;
+    const top =
+      targetElement.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({
+      top: Math.max(top, 0),
+      behavior: "smooth",
+    });
+  }, []);
+
   // Initialize intersection observer to detect when elements enter viewport
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -32,26 +51,37 @@ const Index = () => {
 
   useEffect(() => {
     // This helps ensure smooth scrolling for the anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href')?.substring(1);
-        if (!targetId) return;
-        
-        const targetElement = document.getElementById(targetId);
-        if (!targetElement) return;
-        
-        // Increased offset to account for mobile nav
-        const offset = window.innerWidth < 768 ? 100 : 80;
-        
-        window.scrollTo({
-          top: targetElement.offsetTop - offset,
-          behavior: 'smooth'
-        });
-      });
-    });
-  }, []);
+    const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+
+    const handleAnchorClick = (event: Event) => {
+      event.preventDefault();
+      const target = event.currentTarget as HTMLAnchorElement;
+      const targetId = target.getAttribute("href")?.substring(1);
+      if (!targetId) return;
+      scrollToSection(targetId);
+    };
+
+    anchors.forEach((anchor) => anchor.addEventListener("click", handleAnchorClick));
+
+    return () => {
+      anchors.forEach((anchor) =>
+        anchor.removeEventListener("click", handleAnchorClick)
+      );
+    };
+  }, [scrollToSection]);
+
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const sectionId = location.hash.replace("#", "");
+    if (!sectionId) return;
+
+    const timeout = window.setTimeout(() => {
+      scrollToSection(sectionId);
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, [location.hash, scrollToSection]);
 
   return (
     <div className="min-h-screen">

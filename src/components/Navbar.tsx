@@ -7,6 +7,14 @@ import { Link, useLocation } from "react-router-dom";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const sectionLinks = [
+    { id: "services", label: "Tjänster" },
+    { id: "specifications", label: "Vision" },
+    { id: "waitlist", label: "Väntelista" },
+    { id: "contact", label: "Kontakt" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,8 +24,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const location = useLocation();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -34,6 +40,38 @@ const Navbar = () => {
       top: 0,
       behavior: "smooth"
     });
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const targetElement = document.getElementById(sectionId);
+    if (!targetElement) return;
+
+    const offset = window.innerWidth < 768 ? 100 : 80;
+    const targetPosition =
+      targetElement.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({
+      top: Math.max(targetPosition, 0),
+      behavior: "smooth",
+    });
+  };
+
+  const handleSectionNavigation = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    sectionId?: string
+  ) => {
+    if (location.pathname === "/") {
+      event.preventDefault();
+      sectionId ? scrollToSection(sectionId) : scrollToTop();
+      closeMenu();
+      return;
+    }
+
+    if (!sectionId) {
+      // Ensure we land at the top when switching pages
+      scrollToTop();
+    }
+    closeMenu();
   };
 
   return (
@@ -69,30 +107,23 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
-          <Link to="/" className={cn("nav-link", location.pathname === "/" && "font-semibold")}>Hem</Link>
-          {location.pathname === "/" ? (
-            <>
-              <a href="#services" className="nav-link">Tjänster</a>
-              <a href="#specifications" className="nav-link">Vision</a>
-              <a href="#waitlist" className="nav-link">Väntelista</a>
-              <a href="#contact" className="nav-link">Kontakt</a>
-            </>
-          ) : (
-            <>
-              <Link to="/" className="nav-link">
-                Tjänster
-              </Link>
-              <Link to="/" className="nav-link">
-                Vision
-              </Link>
-              <Link to="/" className="nav-link">
-                Väntelista
-              </Link>
-              <Link to="/" className="nav-link">
-                Kontakt
-              </Link>
-            </>
-          )}
+          <Link
+            to="/"
+            className={cn("nav-link", location.pathname === "/" && "font-semibold")}
+            onClick={(event) => handleSectionNavigation(event)}
+          >
+            Hem
+          </Link>
+          {sectionLinks.map(({ id, label }) => (
+            <Link
+              key={id}
+              to={`/#${id}`}
+              className="nav-link"
+              onClick={(event) => handleSectionNavigation(event, id)}
+            >
+              {label}
+            </Link>
+          ))}
           <Link
             to="/om-oss"
             className={cn("nav-link", location.pathname === "/om-oss" && "font-semibold")}
@@ -148,89 +179,21 @@ const Navbar = () => {
               <Link
                 to="/"
                 className="text-2xl font-semibold"
-                onClick={() => {
-                  scrollToTop();
-                  closeMenu();
-                }}
+                onClick={(event) => handleSectionNavigation(event)}
               >
                 Hem
               </Link>
 
-              {location.pathname === "/" ? (
-                <>
-                  <a
-                    href="#services"
-                    className="text-lg font-medium"
-                    onClick={closeMenu}
-                  >
-                    Tjänster
-                  </a>
-                  <a
-                    href="#specifications"
-                    className="text-lg font-medium"
-                    onClick={closeMenu}
-                  >
-                    Vision
-                  </a>
-                  <a
-                    href="#waitlist"
-                    className="text-lg font-medium"
-                    onClick={closeMenu}
-                  >
-                    Väntelista
-                  </a>
-                  <a
-                    href="#contact"
-                    className="text-lg font-medium"
-                    onClick={closeMenu}
-                  >
-                    Kontakt
-                  </a>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/"
-                    className="text-lg font-medium"
-                    onClick={() => {
-                      scrollToTop();
-                      closeMenu();
-                    }}
-                  >
-                    Tjänster
-                  </Link>
-                  <Link
-                    to="/"
-                    className="text-lg font-medium"
-                    onClick={() => {
-                      scrollToTop();
-                      closeMenu();
-                    }}
-                  >
-                    Vision
-                  </Link>
-                  <Link
-                    to="/"
-                    className="text-lg font-medium"
-                    onClick={() => {
-                      scrollToTop();
-                      closeMenu();
-                    }}
-                  >
-                    Väntelista
-                  </Link>
-                  <Link
-                    to="/"
-                    className="text-lg font-medium"
-                    onClick={() => {
-                      scrollToTop();
-                      closeMenu();
-                    }}
-                  >
-                    Kontakt
-                  </Link>
-                </>
-              )}
+              {sectionLinks.map(({ id, label }) => (
+                <Link
+                  key={id}
+                  to={`/#${id}`}
+                  className="text-lg font-medium"
+                  onClick={(event) => handleSectionNavigation(event, id)}
+                >
+                  {label}
+                </Link>
+              ))}
 
               <Link
                 to="/om-oss"
